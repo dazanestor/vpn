@@ -19,14 +19,17 @@ nordvpn login --token "$NORDVPN_TOKEN"
 echo "Setting NordVPN protocol to NordLynx..."
 nordvpn set technology nordlynx
 
-# Habilitar LAN Discovery
+# Intentar habilitar LAN Discovery
 if [ -n "$NORDVPN_LAN_DISCOVERY" ]; then
   echo "Enabling LAN Discovery..."
-  nordvpn set lan-discovery $NORDVPN_LAN_DISCOVERY
+  nordvpn set lan-discovery "$NORDVPN_LAN_DISCOVERY"
+  if [ $? -ne 0 ]; then
+    echo "Failed to enable LAN Discovery. Proceeding without it."
+  fi
 fi
 
-# Agregar subred a la lista blanca
-if [ -n "$NORDVPN_WHITELIST_SUBNET" ]; then
+# Agregar subred a la lista blanca (solo si LAN Discovery no está habilitado)
+if [ "$NORDVPN_LAN_DISCOVERY" != "enable" ] && [ -n "$NORDVPN_WHITELIST_SUBNET" ]; then
   echo "Adding subnet $NORDVPN_WHITELIST_SUBNET to whitelist..."
   nordvpn whitelist add subnet "$NORDVPN_WHITELIST_SUBNET"
 fi
