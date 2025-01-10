@@ -8,10 +8,19 @@ services:
       - NET_ADMIN
     devices:
       - /dev/net/tun
+    ports:
+      - 6878:6878    
     environment:
       - NORDVPN_TOKEN=${NORDVPN_TOKEN}
       - NORDVPN_COUNTRY=${NORDVPN_COUNTRY}
       - NORDVPN_LAN_DISCOVERY=${NORDVPN_LAN_DISCOVERY}
     sysctls:
       net.ipv6.conf.all.disable_ipv6: "0"
+    restart: unless-stopped
+  acestream:
+    image: ghcr.io/martinbjeldbak/acestream-http-proxy
+    container_name: acestream
+    depends_on:
+      - nordvpn
+    network_mode: "container:nordvpn"
     restart: unless-stopped
