@@ -9,8 +9,8 @@ services:
     devices:
       - /dev/net/tun
     environment:
-      - NORDVPN_TOKEN=tu_token_aqui
-      - NORDVPN_COUNTRY=us
-      - NORDVPN_LAN_DISCOVERY=enable
-      - NORDVPN_WHITELIST_SUBNET=192.168.1.0/24
+      - NORDVPN_TOKEN=${NORDVPN_TOKEN}
+      - NORDVPN_COUNTRY=${NORDVPN_COUNTRY}
+      - NORDVPN_LAN_DISCOVERY=${NORDVPN_LAN_DISCOVERY}
+      - NORDVPN_WHITELIST_SUBNET=${NORDVPN_WHITELIST_SUBNET}
     restart: unless-stopped
