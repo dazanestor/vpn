@@ -33,17 +33,6 @@ else
   nordvpn set lan-discovery disable
 fi
 
-# Agregar subred a la lista blanca si LAN Discovery está deshabilitado
-if [ "$NORDVPN_LAN_DISCOVERY" != "enable" ] && [ -n "$NORDVPN_WHITELIST_SUBNET" ]; then
-  echo "Adding subnet $NORDVPN_WHITELIST_SUBNET to whitelist..."
-  nordvpn whitelist add subnet "$NORDVPN_WHITELIST_SUBNET"
-  if [ $? -eq 0 ]; then
-    echo "Subnet $NORDVPN_WHITELIST_SUBNET added to whitelist successfully."
-  else
-    echo "Failed to add subnet to whitelist."
-  fi
-fi
-
 # Aplicar configuraciones adicionales si se proporcionan
 if [ -n "$NORDVPN_SETTINGS" ]; then
   echo "Applying NordVPN settings..."
