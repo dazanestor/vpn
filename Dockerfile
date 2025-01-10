@@ -15,9 +15,7 @@ RUN apt-get update && \
 ENV NORDVPN_TOKEN ""
 ENV NORDVPN_COUNTRY ""
 ENV NORDVPN_GROUP ""
-ENV NORDVPN_SETTINGS "technology nordlynx"
 ENV NORDVPN_LAN_DISCOVERY "enable"
-ENV NORDVPN_WHITELIST_SUBNET ""
 
 # Copiar el script de entrada
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
