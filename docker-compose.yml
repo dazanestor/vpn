@@ -16,7 +16,7 @@ services:
       - NORDVPN_LAN_DISCOVERY=${NORDVPN_LAN_DISCOVERY}
     sysctls:
       net.ipv6.conf.all.disable_ipv6: "0"
-    restart: unless-stopped
+    restart: no
   acestream:
     image: ghcr.io/martinbjeldbak/acestream-http-proxy
     container_name: acestream
