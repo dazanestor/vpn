@@ -12,4 +12,6 @@ services:
       - NORDVPN_TOKEN=${NORDVPN_TOKEN}
       - NORDVPN_COUNTRY=${NORDVPN_COUNTRY}
       - NORDVPN_LAN_DISCOVERY=${NORDVPN_LAN_DISCOVERY}
+    sysctls:
+      net.ipv6.conf.all.disable_ipv6: "0"
     restart: unless-stopped
