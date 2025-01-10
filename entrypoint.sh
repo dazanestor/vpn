@@ -48,8 +48,14 @@ else
   nordvpn connect
 fi
 
-# Mostrar el estado de la conexión
-nordvpn status
+# Validar conexión VPN
+status=$(nordvpn status | grep "Status: Connected")
+if [ -z "$status" ]; then
+  echo "Error: VPN connection failed."
+  exit 1
+else
+  echo "VPN connected successfully."
+fi
 
 # Mantener el contenedor en ejecución
-#exec "$@"
+exec "$@"
