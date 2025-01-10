@@ -1,9 +1,27 @@
 #!/bin/bash
 
+# Función para verificar el estado del servicio NordVPN
+check_nordvpn_daemon() {
+  for i in {1..5}; do
+    nordvpn status &>/dev/null
+    if [ $? -eq 0 ]; then
+      echo "NordVPN daemon is ready."
+      return 0
+    fi
+    echo "Waiting for NordVPN daemon to be ready... ($i/5)"
+    sleep 2
+  done
+  echo "Error: Cannot reach NordVPN daemon after multiple attempts."
+  exit 1
+}
+
 # Iniciar el servicio NordVPN
 echo "Starting NordVPN service..."
 /etc/init.d/nordvpn start
 sleep 5
+
+# Verificar si el demonio de NordVPN está disponible
+check_nordvpn_daemon
 
 # Verificar si el token está configurado
 if [ -z "$NORDVPN_TOKEN" ]; then
@@ -23,11 +41,6 @@ nordvpn set technology nordlynx || echo "Failed to set technology to NordLynx. P
 if [ "$NORDVPN_LAN_DISCOVERY" = "enable" ]; then
   echo "Enabling LAN Discovery..."
   nordvpn set lan-discovery enable
-  if [ $? -eq 0 ]; then
-    echo "LAN Discovery enabled successfully."
-  else
-    echo "Failed to enable LAN Discovery. Proceeding without it."
-  fi
 else
   echo "Disabling LAN Discovery..."
   nordvpn set lan-discovery disable
