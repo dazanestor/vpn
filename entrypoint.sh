@@ -3,7 +3,7 @@
 # Iniciar el servicio NordVPN
 echo "Starting NordVPN service..."
 /etc/init.d/nordvpn start
-sleep 10
+sleep 5
 
 # Verificar si el token está configurado
 if [ -z "$NORDVPN_TOKEN" ]; then
@@ -52,4 +52,4 @@ fi
 nordvpn status
 
 # Mantener el contenedor en ejecución
-exec "$@"
+#exec "$@"
