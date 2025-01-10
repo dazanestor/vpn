@@ -17,28 +17,38 @@ nordvpn login --token "$NORDVPN_TOKEN"
 
 # Configurar NordVPN para usar NordLynx
 echo "Setting NordVPN protocol to NordLynx..."
-nordvpn set technology nordlynx
+nordvpn set technology nordlynx || echo "Failed to set technology to NordLynx. Proceeding with current configuration."
 
-# Intentar habilitar LAN Discovery
-if [ -n "$NORDVPN_LAN_DISCOVERY" ]; then
+# Habilitar LAN Discovery si está configurado
+if [ "$NORDVPN_LAN_DISCOVERY" = "enable" ]; then
   echo "Enabling LAN Discovery..."
-  nordvpn set lan-discovery "$NORDVPN_LAN_DISCOVERY"
-  if [ $? -ne 0 ]; then
+  nordvpn set lan-discovery enable
+  if [ $? -eq 0 ]; then
+    echo "LAN Discovery enabled successfully."
+  else
     echo "Failed to enable LAN Discovery. Proceeding without it."
   fi
+else
+  echo "Disabling LAN Discovery..."
+  nordvpn set lan-discovery disable
 fi
 
-# Agregar subred a la lista blanca (solo si LAN Discovery no está habilitado)
+# Agregar subred a la lista blanca si LAN Discovery está deshabilitado
 if [ "$NORDVPN_LAN_DISCOVERY" != "enable" ] && [ -n "$NORDVPN_WHITELIST_SUBNET" ]; then
   echo "Adding subnet $NORDVPN_WHITELIST_SUBNET to whitelist..."
   nordvpn whitelist add subnet "$NORDVPN_WHITELIST_SUBNET"
+  if [ $? -eq 0 ]; then
+    echo "Subnet $NORDVPN_WHITELIST_SUBNET added to whitelist successfully."
+  else
+    echo "Failed to add subnet to whitelist."
+  fi
 fi
 
 # Aplicar configuraciones adicionales si se proporcionan
 if [ -n "$NORDVPN_SETTINGS" ]; then
   echo "Applying NordVPN settings..."
   for setting in $NORDVPN_SETTINGS; do
-    nordvpn set $setting
+    nordvpn set $setting || echo "Failed to apply setting: $setting"
   done
 fi
 
