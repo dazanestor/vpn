@@ -22,5 +22,7 @@ services:
     container_name: acestream
     depends_on:
       - nordvpn
+    environment:
+      - ALLOW_REMOTE_ACCESS=yes    
     network_mode: "container:nordvpn"
     restart: unless-stopped
