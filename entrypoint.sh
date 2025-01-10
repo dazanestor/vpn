@@ -1,29 +1,9 @@
 #!/bin/bash
 
-# Función para verificar el estado del daemon
-check_nordvpn_daemon() {
-  for i in {1..5}; do
-    nordvpn status &>/dev/null
-    if [ $? -eq 0 ]; then
-      echo "NordVPN daemon is ready."
-      return 0
-    fi
-    echo "Waiting for NordVPN daemon to be ready... ($i/5)"
-    sleep 5
-  done
-  echo "Error: Cannot reach NordVPN daemon after multiple attempts."
-  return 1
-}
-
 # Iniciar el servicio NordVPN
 echo "Starting NordVPN service..."
 /etc/init.d/nordvpn start
 sleep 5
-
-# Verificar si el daemon está listo
-if ! check_nordvpn_daemon; then
-  exit 1
-fi
 
 # Verificar si el token está configurado
 if [ -z "$NORDVPN_TOKEN" ]; then
