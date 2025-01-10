@@ -1,0 +1,16 @@
+services:
+  nordvpn:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nordvpn
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    environment:
+      - NORDVPN_TOKEN=tu_token_aqui
+      - NORDVPN_COUNTRY=us
+      - NORDVPN_LAN_DISCOVERY=enable
+      - NORDVPN_WHITELIST_SUBNET=192.168.1.0/24
+    restart: unless-stopped
