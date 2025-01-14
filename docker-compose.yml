@@ -8,6 +8,8 @@ services:
       - NET_ADMIN
     ports:
       - 6878:6878
+    devices:
+      - /dev/net/tun      
     environment:
       - NORDVPN_TOKEN=${NORDVPN_TOKEN} # Token de autenticación de NordVPN
       - TECHNOLOGY=NordLynx # Tecnología a usar (NordLynx)
