@@ -4,8 +4,9 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: nordvpn
-    cap_add:
-      - NET_ADMIN
+    privileged: true    
+#    cap_add:
+#      - NET_ADMIN
     ports:
       - 6878:6878
     devices:
