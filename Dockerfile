@@ -22,9 +22,9 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Añadir un script de configuración
-COPY configure-nordvpn.sh /usr/local/bin/configure-nordvpn.sh
-RUN chmod +x /usr/local/bin/configure-nordvpn.sh
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # ENTRYPOINT y CMD para iniciar NordVPN y configurar opciones
-ENTRYPOINT ["/usr/local/bin/configure-nordvpn.sh"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["tail", "-f", "/dev/null"]
