@@ -13,7 +13,6 @@ services:
       - TECHNOLOGY=NordLynx # Tecnología a usar (NordLynx)
       - NORDVPN_COUNTRY=ch # Código del país (CH = Suiza)
       - NORDVPN_GROUP=p2p # Grupo de conexión P2P
-      - LAN_DISCOVERY=enable # Habilita LAN Discovery
       - WHITELISTED_SUBNETS=192.168.0.0/16,10.0.0.0/8,172.16.0.0/12 # Subredes permitidas
     sysctls:
       net.ipv6.conf.all.disable_ipv6: "0" # Habilitar soporte para IPv6
