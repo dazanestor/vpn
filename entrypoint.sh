@@ -22,12 +22,6 @@ if [ -n "$NORDVPN_COUNTRY" ] && [ -n "$NORDVPN_GROUP" ] && [ "$NORDVPN_GROUP" = 
     nordvpn connect --group p2p "$NORDVPN_COUNTRY"
 fi
 
-# Habilitar LAN Discovery si está configurado
-if [ "$LAN_DISCOVERY" = "enable" ]; then
-    echo "Habilitando LAN Discovery..."
-    nordvpn set lan-discovery enabled
-fi
-
 # Añadir subredes a la lista de permitidos
 if [ -n "$WHITELISTED_SUBNETS" ]; then
     echo "Añadiendo subredes a la lista de permitidos..."
