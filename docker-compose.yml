@@ -5,9 +5,9 @@ services:
       dockerfile: Dockerfile
     container_name: nordvpn
     cap_add:
-      - NET_ADMIN # Permite al contenedor gestionar configuraciones de red
+      - NET_ADMIN
     ports:
-      - 6878:6878        
+      - 6878:6878
     environment:
       - NORDVPN_TOKEN=${NORDVPN_TOKEN}
       - TECHNOLOGY=NordLynx
