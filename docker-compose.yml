@@ -5,18 +5,19 @@ services:
       dockerfile: Dockerfile
     container_name: nordvpn
     cap_add:
-      - NET_ADMIN
-    devices:
-      - /dev/net/tun
+      - NET_ADMIN # Permite al contenedor gestionar configuraciones de red
     ports:
-      - 6878:6878    
+      - 6878:6878        
     environment:
       - NORDVPN_TOKEN=${NORDVPN_TOKEN}
-      - NORDVPN_COUNTRY=${NORDVPN_COUNTRY}
-      - NORDVPN_LAN_DISCOVERY=${NORDVPN_LAN_DISCOVERY}
-    sysctls:
+      - TECHNOLOGY=NordLynx
+      - NORDVPN_COUNTRY=ch
+      - NORDVPN_GROUP=p2p
+      - LAN_DISCOVERY=enable
+      - WHITELISTED_SUBNETS=192.168.0.0/16,10.0.0.0/8,172.16.0.0/12
+      sysctls:
       net.ipv6.conf.all.disable_ipv6: "0"
-    restart: no
+    restart: unless-stopped
   acestream:
     image: ghcr.io/martinbjeldbak/acestream-http-proxy
     container_name: acestream
